@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuriya Family Shop — аудит соцсетей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#18130d; --ink2:#4a4036; --ink3:#74685a; --cream:#fbf6ec; --paper:#fffdf8; --sand:#f2e8d6; --line:#e7d8bd; --gold:#c39436; --gold-d:#8a6420; --gold-s:#f4e6c4; --red:#a8402f; --red-s:#f9e6e1; --ok:#2f7a4f; --ok-s:#e3f2e8; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--cream); color:var(--ink); font:400 16px/1.6 Manrope, system-ui, sans-serif; }
+  ::selection { background: var(--gold-s); }
+  .wrap { width:min(100% - 32px, 920px); margin:0 auto; }
+  header.top { background:var(--ink); color:#e9dcc2; padding:40px 0 34px; }
+  header.top h1 { font:700 clamp(26px,5vw,42px)/1.1 Unbounded, sans-serif; letter-spacing:-.03em; margin:0 0 12px; color:var(--paper); }
+  header.top h1 em { font-style:normal; color:var(--gold); }
+  header.top p { margin:0; max-width:62ch; color:#cbbd9f; }
+  .meta { margin-top:16px; font-size:13px; color:#9c8f78; }
+  main { padding:32px 0 64px; }
+  section { margin:0 0 44px; }
+  h2 { font:700 clamp(20px,3.6vw,28px)/1.2 Unbounded, sans-serif; letter-spacing:-.02em; margin:0 0 6px; }
+  .lead { color:var(--ink2); margin:0 0 18px; max-width:68ch; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  .kpi { background:var(--paper); border-radius:14px; padding:16px 18px; box-shadow:0 1px 0 var(--line), 0 10px 24px -16px rgba(60,40,10,.3); }
+  .kpi b { display:block; font:700 26px/1.1 Unbounded, sans-serif; letter-spacing:-.02em; }
+  .kpi span { font-size:13px; color:var(--ink3); }
+  .kpi .bad { color:var(--red); }
+  table { width:100%; border-collapse:collapse; background:var(--paper); border-radius:14px; overflow:hidden; box-shadow:0 1px 0 var(--line); font-size:14.5px; }
+  th, td { text-align:left; vertical-align:top; padding:12px 14px; border-bottom:1px solid var(--sand); }
+  th { background:var(--sand); font-size:12.5px; letter-spacing:.02em; color:var(--ink2); font-weight:700; }
+  tr:last-child td { border-bottom:0; }
+  td.n { font-variant-numeric: tabular-nums; white-space:nowrap; }
+  .tw { overflow-x:auto; border-radius:14px; }
+  .prob { display:grid; gap:12px; }
+  .p { background:var(--paper); border-radius:14px; padding:18px 20px; box-shadow:0 1px 0 var(--line), 0 10px 24px -18px rgba(60,40,10,.3); display:grid; gap:10px; }
+  .p h3 { margin:0; font-size:17px; line-height:1.35; display:flex; gap:10px; align-items:baseline; }
+  .p h3 .num { flex:none; width:28px; height:28px; border-radius:50%; background:var(--ink); color:var(--gold); display:grid; place-items:center; font:700 13px Unbounded, sans-serif; }
+  .p .row { display:grid; grid-template-columns:120px 1fr; gap:10px; font-size:14.5px; }
+  .p .row span:first-child { color:var(--ink3); font-weight:700; font-size:12.5px; padding-top:2px; }
+  .p .loss span:last-child { color:var(--red); }
+  .p .fix span:last-child { color:var(--ok); font-weight:600; }
+  .two { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+  .box { background:var(--paper); border-radius:14px; padding:18px 20px; box-shadow:0 1px 0 var(--line); }
+  .box h3 { margin:0 0 10px; font-size:16px; }
+  .box.minus { background:var(--red-s); box-shadow:none; }
+  .box.plus { background:var(--ok-s); box-shadow:none; }
+  ul { margin:0; padding-left:20px; } li { margin:6px 0; }
+  .quote { display:inline-block; background:var(--gold-s); color:var(--gold-d); border-radius:8px; padding:2px 8px; font-weight:700; font-size:14px; margin:2px 4px 2px 0; }
+  ol.steps { counter-reset:s; list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+  ol.steps li { counter-increment:s; background:var(--paper); border-radius:14px; padding:14px 18px 14px 58px; position:relative; box-shadow:0 1px 0 var(--line); margin:0; }
+  ol.steps li::before { content:counter(s); position:absolute; left:16px; top:14px; width:28px; height:28px; border-radius:50%; background:var(--gold); color:var(--ink); display:grid; place-items:center; font:700 13px Unbounded, sans-serif; }
+  ol.steps li b { display:block; }
+  .note { font-size:13px; color:var(--ink3); margin-top:12px; }
+  .say { background:var(--ink); color:#eadfca; border-radius:14px; padding:20px 22px; }
+  .say p { margin:0 0 10px; } .say p:last-child { margin:0; }
+  .say b { color:var(--gold); }
+  @media (max-width:560px) { .p .row { grid-template-columns:1fr; gap:2px; } }
+  @media print { body { background:#fff; } header.top { -webkit-print-color-adjust:exact; print-color-adjust:exact; } .p, .box, .kpi, table, ol.steps li { break-inside:avoid; box-shadow:none; border:1px solid var(--line); } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Nuriya Family Shop: <em>аудит соцсетей</em> и предложение</h1>
+    <p>У магазина около 55 тысяч подписчиков, но соцсети почти не продают: в постах нет цен, размеров и подписей, а вопросы покупателей («сколько стоит кг», «где адрес», «есть ли доставка») остаются без ответа. Сайт-каталог закрывает эти дыры и даёт одно место, куда вести всех покупателей.</p>
+    <div class="meta">Проверено 08.11.2026 · Telegram @savdo_sotiq_mustafo_shop, @kiloli_tavar · Instagram @nuriya__family__shop</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Коротко о площадках</h2>
+    <p class="lead">Аудитория большая, но разбросана по трём площадкам, и одна из них заброшена.</p>
+    <div class="tw"><table>
+      <tr><th>Площадка</th><th>Подписчики</th><th>Активность</th><th>Последний пост</th><th>Главная беда</th></tr>
+      <tr><td><b>Telegram</b><br>@savdo_sotiq_mustafo_shop</td><td class="n">48 268</td><td>~244 поста за 10 дней, пачками по 40–90 штук</td><td class="n">ноябрь 2026</td><td>Фото без подписей, цен и размеров</td></tr>
+      <tr><td><b>Instagram</b><br>@nuriya__family__shop</td><td class="n">5 965</td><td>2–3 ролика в месяц, 25–480 лайков</td><td class="n">30.10.2026</td><td>Ролики не про товар, вопросы без ответа</td></tr>
+      <tr><td><b>Telegram</b><br>@kiloli_tavar</td><td class="n">945</td><td>Не ведётся</td><td class="n">18.12.2025</td><td>Заброшен, но на него ведут ссылки</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Главные проблемы</h2>
+    <p class="lead">По каждой: что видно, чем это стоит магазину и как исправляем.</p>
+    <div class="prob">
+
+      <div class="p"><h3><span class="num">1</span>Нет цен и размеров в постах</h3>
+        <div class="row"><span>Что видно</span><span>Из ~244 постов основного канала только 5 с текстом. Цена звучит голосом в видео («120 минг килоси видеода айтилган») или изредка текстом («БУНИ КИЛОСИ 165.000»). На фото китайские артикулы и размеры иероглифами.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Покупатель не понимает, сколько заплатит, и уходит. Каждый вопрос «сколько?» — это ручная переписка админа.</span></div>
+        <div class="row fix"><span>Решение</span><span>Сайт-каталог: у каждого товара фото, цена за кг, размеры и описание. В пост — одна ссылка на товар.</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">2</span>Вопросы покупателей остаются без ответа</h3>
+        <div class="row"><span>Что видно</span><span>Под роликом «Нархлар обзори» спрашивают:
+          <span class="quote">Kiloda narx nechpul?</span><span class="quote">Adres qayerda?</span><span class="quote">Dastavka bormi?</span><span class="quote">Toshkentga dastavka bormi?</span><span class="quote">Telegram gruppasi qayerda?</span> — ответов магазина не видно.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Это горячие покупатели, готовые купить, в том числе из Ташкента. Без ответа они уходят к конкурентам.</span></div>
+        <div class="row fix"><span>Решение</span><span>На сайте сразу видны цены, оба адреса с картой, время работы и способы оплаты. В Instagram — шаблоны ответов и ссылка на каталог.</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">3</span>Посты вываливаются пачками ночью</h3>
+        <div class="row"><span>Что видно</span><span>За один день выкладывается 81–89 постов. 40 фото подряд опубликованы в 00:15. Тексты капсом: «УХЛАМАГАНЛАР БОРМИ…».</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Лента превращается в поток картинок, нужное не найти. Люди отключают уведомления или выходят из канала.</span></div>
+        <div class="row fix"><span>Решение</span><span>План постов: 3–5 в день в удобное время, подборки по темам («Для малышей», «Куртки», «Школа»), каждая со ссылкой на раздел сайта.</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">4</span>Устаревшие закреплённые сообщения</h3>
+        <div class="row"><span>Что видно</span><span>В основном канале закреплено «скидка заканчивается завтра» (№50). В @kiloli_tavar закреплён конкурс «5-й этап» почти годовой давности.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Первое, что видит новый подписчик, — неактуальная информация. Доверие падает.</span></div>
+        <div class="row fix"><span>Решение</span><span>Одно закреплённое сообщение: адреса, время работы, цена за кг, ссылка на каталог и контакт админа.</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">5</span>Путаница с названиями и ссылками</h3>
+        <div class="row"><span>Что видно</span><span>Бренд — Nuriya Family Shop, а адрес канала «savdo_sotiq_mustafo_shop». Описание канала ведёт в заброшенный @kiloli_tavar. В Telegram пишут кириллицей, в Instagram латиницей.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Магазин сложно найти поиском и запомнить. Часть людей уходит в мёртвый канал.</span></div>
+        <div class="row fix"><span>Решение</span><span>Единое название везде, замена ссылки на @kiloli_tavar на ссылку на сайт. Сайт работает на двух языках: узбекском и русском.</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">6</span>Вирусный охват не превращается в продажи</h3>
+        <div class="row"><span>Что видно</span><span>Ролик от 9 ноября 2025 набрал 25,6 тыс. лайков, 611 комментариев и около 33 тыс. репостов. Подпись: «Биз билан хар бир тренд рекка чикади» — без товара, цены и ссылки. Свежие ролики — о семье и чувствах, часть вообще без подписи.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>Десятки тысяч просмотров ушли впустую: зрителю некуда нажать, чтобы купить.</span></div>
+        <div class="row fix"><span>Решение</span><span>Ссылка на сайт в шапке профиля. В каждом ролике — товар, цена и призыв «Каталог по ссылке в профиле».</span></div>
+      </div>
+
+      <div class="p"><h3><span class="num">7</span>В Telegram нельзя задать вопрос</h3>
+        <div class="row"><span>Что видно</span><span>Основной канал — группа, где подписчикам запрещено писать. Под товаром нельзя спросить, обсуждения нет, реакции единичные.</span></div>
+        <div class="row loss"><span>Чем стоит</span><span>У 48 тысяч подписчиков нет простого способа сказать «хочу» — только искать контакт админа.</span></div>
+        <div class="row fix"><span>Решение</span><span>Корзина на сайте: выбрал товары и вес → «Оформить» → готовый заказ уходит админу в Telegram.</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Что лишнее и чего не хватает</h2>
+    <div class="two">
+      <div class="box minus"><h3>Лишнее</h3><ul>
+        <li>Пачки по 40–90 фото за раз и посты в полночь.</li>
+        <li>Закреплённые скидки и конкурсы, которые давно закончились.</li>
+        <li>Тексты капсом.</li>
+        <li>Фото поставщика с иероглифами, артикулами и ценами в юанях.</li>
+        <li>Заброшенный канал @kiloli_tavar в ссылках.</li>
+        <li>Одинаковые обложки у 6 актуальных историй в Instagram: не понять, где что.</li>
+        <li>Общие хэштеги (#инстаграм #рекомендации #реклама) вместо местных и товарных.</li>
+      </ul></div>
+      <div class="box plus"><h3>Не хватает</h3><ul>
+        <li>Цены за кг и размеров у каждого товара.</li>
+        <li>Каталога по разделам: малыши, комплекты, куртки, школа, обувь.</li>
+        <li>Телефона и времени работы в шапке Instagram.</li>
+        <li>Чёткой информации о доставке, особенно в Ташкент: о ней спрашивают.</li>
+        <li>Ответов на комментарии.</li>
+        <li>Отзывов и фото покупателей: люди пишут, сколько заплатили, — это готовые отзывы.</li>
+        <li>Одной ссылки, где есть всё: товары, цены, адреса, заказ.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что уже решает наш сайт</h2>
+    <p class="lead">Готовый сайт закрывает 5 из 7 проблем. Две оставшиеся (пачки постов и ответы на комментарии) решаются ведением соцсетей, это следующая услуга.</p>
+    <div class="tw"><table>
+      <tr><th>Проблема</th><th>Что на сайте</th></tr>
+      <tr><td>Нет цен и размеров</td><td>24 товара с фото, ценой за кг, размерами и описанием</td></tr>
+      <tr><td>Вопросы «сколько, где, как»</td><td>Блок «Как купить на вес», цены, адрес, время работы, оплата</td></tr>
+      <tr><td>Нельзя заказать из Telegram</td><td>Корзина с расчётом веса и суммы; от 5 кг сама включается оптовая цена</td></tr>
+      <tr><td>Путаница и мёртвые ссылки</td><td>Одна ссылка на всё и кнопки на все соцсети</td></tr>
+      <tr><td>Кириллица и латиница</td><td>Переключатель узбекский / русский</td></tr>
+    </table></div>
+    <p class="note"><b>Доделать до встречи:</b> добавить второй филиал («Ойбек роддом», он есть в Instagram) и сверить цены. В Telegram цены разные — 120 000, 165 000, 190 000, 210 000 сум за кг, — значит, цену лучше указывать у каждого товара или партии отдельно, а не одну на всё.</p>
+  </section>
+
+  <section>
+    <h2>Как подать владельцу</h2>
+    <ol class="steps">
+      <li><b>Начать с их же покупателей.</b>Показать на телефоне комментарии «Kiloda narx nechpul?», «Dastavka bormi?» без ответа: «Вот люди, которые хотели купить и не купили».</li>
+      <li><b>Показать цифры.</b>48 тыс. в Telegram, 6 тыс. в Instagram и вирусный ролик на 25 тыс. лайков, но ни одной ссылки, куда нажать и купить.</li>
+      <li><b>Открыть готовый сайт с их товарами.</b>Каталог, карточка, корзина, переключение языка. Это сильнее любых обещаний: работа уже сделана.</li>
+      <li><b>Предложить запуск.</b>Перенести сайт на домен, добавить второй филиал и реальные цены, поставить ссылку в шапки Instagram и Telegram.</li>
+      <li><b>Предложить ведение.</b>Новые товары на сайт каждую неделю, 3–5 постов в день со ссылками, ответы на комментарии, одно актуальное закреплённое сообщение.</li>
+    </ol>
+    <div class="say" style="margin-top:16px">
+      <p><b>Фраза для начала:</b> «У вас 55 тысяч подписчиков, но люди спрашивают цену и адрес и не получают ответа. Я сделал сайт с вашими товарами: там сразу видно цену за кило, размеры и адрес, и можно собрать заказ. Давайте покажу».</p>
+      <p><b>Что спросить у владельца:</b> какие сейчас цены за кг и одинаковы ли они для всех товаров; есть ли доставка и в какие города; какой адрес и часы у второго филиала; кто отвечает на сообщения и сколько их в день.</p>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
